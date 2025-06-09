@@ -5,6 +5,7 @@ from langchain_community.embeddings import LlamaCppEmbeddings
 
 pdf_data_path = "data"
 vector_db_path = "local/vector_stores/db_faiss"
+model_path = "models/all-MiniLM-L6-v2-GGUF/all-MiniLM-L6-v2.Q8_0.gguf"
 
 def create_db_from_pdf():
     loader = DirectoryLoader(pdf_data_path, glob="*.pdf", loader_cls=PyPDFLoader)
@@ -13,7 +14,7 @@ def create_db_from_pdf():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=50)
     chunks = text_splitter.split_documents(documents)
 
-    embeddings = LlamaCppEmbeddings(model_path="models/all-MiniLM-L6-v2-GGUF/all-MiniLM-L6-v2.Q8_0.gguf")
+    embeddings = LlamaCppEmbeddings(model_path=model_path)
 
     db = FAISS.from_documents(chunks, embeddings)
     db.save_local(vector_db_path)

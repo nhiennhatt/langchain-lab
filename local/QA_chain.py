@@ -4,10 +4,12 @@ from langchain_community.llms import CTransformers
 from langchain_community.vectorstores import FAISS
 from langchain_core.runnables import RunnablePassthrough
 
+embedding_model_path="models/all-MiniLM-L6-v2-GGUF/all-MiniLM-L6-v2.Q8_0.gguf"
+model_path="models/vinallama-7b-chat-GGUF/vinallama-7b-chat_q5_0.gguf"
 
 def load_llm():
     llm = CTransformers(
-        model="models/vinallama-7b-chat-GGUF/vinallama-7b-chat_q5_0.gguf",
+        model=model_path,
         model_type="llama",
         config={
             'max_new_tokens': 512,
@@ -29,7 +31,7 @@ def create_chain(prompt, llm, retriever):
 
 
 def create_retriever():
-    embeddings = LlamaCppEmbeddings(model_path="models/all-MiniLM-L6-v2-GGUF/all-MiniLM-L6-v2.Q8_0.gguf")
+    embeddings = LlamaCppEmbeddings(model_path=embedding_model_path)
     vector_stores = FAISS.load_local(folder_path="local/vector_stores/db_faiss", embeddings=embeddings,
                                      allow_dangerous_deserialization=True)
     return vector_stores.as_retriever()

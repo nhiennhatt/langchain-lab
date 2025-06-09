@@ -1,9 +1,11 @@
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import CTransformers
 
+model_path="models/vinallama-7b-chat-GGUF/vinallama-7b-chat_q5_0.gguf"
+
 def load_llm():
     llm = CTransformers(
-        model="models/vinallama-7b-chat-GGUF/vinallama-7b-chat_q5_0.gguf",
+        model=model_path,
         model_type="llama"
     )
     return llm
