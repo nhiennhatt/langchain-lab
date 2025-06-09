@@ -1,0 +1,6 @@
+/models
+/.venv
+/local/vector_stores
+/.idea
+
+.env
